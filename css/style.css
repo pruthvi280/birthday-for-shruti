@@ -1,0 +1,122 @@
+/* Reset and base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(135deg, #1f0066 0%, #7b00ff 50%, #ff5e7e 100%);
+  overflow-x: hidden;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  backdrop-filter: blur(8px);
+  z-index: 100;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.navbar a:hover { color: #ffd700; }
+
+/* Card design */
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.card {
+  background: rgba(255,255,255,0.06);
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
+.headline {
+  font-size: clamp(28px,5vw,68px);
+  text-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+.sub { font-size: clamp(14px,2vw,20px); opacity: 0.9; }
+
+/* Cake */
+.cake { width: 200px; height: 200px; background: pink; border-radius: 15px; position: relative; margin: 1rem auto; }
+.candle { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 10px; height: 40px; background: #ffeb99; border-radius: 5px; }
+.flame { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 15px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff1b8 0%, #ffd166 30%, #ff7a18 65%, #ff3b3b 100%); }
+
+/* Gifts */
+.gifts { display: flex; gap: 1rem; justify-content: center; }
+.gift { width: 70px; height: 70px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.pink { background: linear-gradient(180deg,#ffb6c1,#ff8fb1); }
+.blue { background: linear-gradient(180deg,#b6f0ff,#7ad0ff); }
+.yellow { background: linear-gradient(180deg,#fff3b6,#ffd66f); }
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: none;
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* Gallery */
+.gallery {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 1rem;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.6s ease;
+}
+.gallery img.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* Wishes page */
+.wishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.wishes-list blockquote {
+  background: rgba(255,255,255,0.08);
+  padding: 1rem;
+  border-left: 5px solid #ffd700;
+  border-radius: 10px;
+}
+#wishForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+#wishForm input, #wishForm textarea {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+

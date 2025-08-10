@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Birthday Cake!</title>
+    <style>
+        /* Base Theme Styles */
+        *{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%;}
+        body{
+            font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(135deg,#1f0066 0%, #7b00ff 50%, #ff5e7e 100%);
+            overflow:hidden; /* Hide scrollbars from temporary effects */
+            color:#fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.15);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .navbar a:hover {
+            opacity: 1;
+        }
+        .navbar a.active {
+            opacity: 1;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+        .stage{
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            padding: 80px 2rem 3rem 2rem;
+        }
+        .card{
+            width:min(700px,95%);
+            background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border-radius:28px;
+            padding:2.5rem;
+            box-shadow:0 10px 40px rgba(0,0,0,0.45);
+            backdrop-filter: blur(6px);
+            position: relative;
+            z-index: 10;
+        }
+        .headline{
+            font-size:clamp(24px,5vw,48px);
+            letter-spacing:1px;
+            font-weight:700;
+            text-transform:uppercase;
+            text-shadow: 0 4px 18px rgba(0,0,0,0.35);
+        }
+
+        /* --- Animated Cake Styles --- */
+        .cake-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cake {
+            position: relative;
+            width: 250px;
+        }
+
+        .plate {
+            width: 300px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .layer {
+            position: relative;
+            width: 250px;
+            height: 80px;
+            background-color: #f2d7ac;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .layer-top {
+            border-radius: 50% / 20%;
+            height: 60px;
+        }
+
+        .layer-middle {
+            height: 70px;
+        }
+
+        .layer-bottom {
+            height: 80px;
+            border-radius: 0 0 125px 125px / 0 0 20px 20px;
+        }
+        
+        .icing {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50% / 100%;
+            transform: translateY(-5px);
+        }
+        
+        .drip {
+            position: absolute;
+            background-color: #fff;
+            width: 30px;
+            height: 40px;
+            border-radius: 0 0 15px 15px;
+        }
+        .drip1 { top: 10px; left: 10%; }
+        .drip2 { top: 15px; left: 40%; height: 50px; }
+        .drip3 { top: 10px; left: 75%; }
+        
+        .candles {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+        }
+        
+        .candle {
+            width: 10px;
+            height: 50px;
+            background: repeating-linear-gradient(45deg, #ff5e7e, #ff5e7e 5px, #fff 5px, #fff 10px);
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 20px;
+            background: radial-gradient(circle, #ffd000, #ff7b00 80%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1.5s ease-in-out infinite;
+        }
+        
+        .flame.out {
+            animation: flame-out 0.4s ease-out forwards;
+        }
+
+        .smoke {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #777;
+            border-radius: 50%;
+            animation: smoke-up 2s ease-out forwards;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: translateX(-50%) scaleY(1) rotate(2deg); opacity: 1; }
+            50% { transform: translateX(-50%) scaleY(1.1) rotate(-2deg); opacity: 0.9; }
+        }
+        
+        @keyframes flame-out {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        @keyframes smoke-up {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(3); }
+        }
+        
+        .message-box {
+            margin-top: 1.5rem;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem; border-radius: 12px; border: 0; background:#fff; color:#1a1a1a; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.2); transition: all 0.2s;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* --- Celebration Effects --- */
+        .celebration-pop {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: pop 1s ease-out forwards;
+        }
+
+        @keyframes pop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(var(--pop-x), var(--pop-y)) scale(1); opacity: 0; }
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 70px;
+            height: 90px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-up 5s ease-out forwards;
+            bottom: -100px; /* Start from below the screen */
+            z-index: 1;
+        }
+        .balloon::after { /* String */
+            content: '';
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.8) rotate(-5deg); opacity: 0.8; }
+            100% { transform: translateY(-120vh) scale(1) rotate(5deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+
+        <a href="games.html" class="active">Celebration</a>
+        <a href="surprise.html">Surprise</a>
+    </nav>
+
+    <div class="stage">
+        <div class="card">
+            <h1 class="headline">Make a Wish... 🎂</h1>
+            <div class="cake-container">
+                <div class="cake">
+                    <div class="layer layer-top"></div>
+                    <div class="icing"></div>
+                    <div class="drip drip1"></div>
+                    <div class="drip drip2"></div>
+                    <div class="drip drip3"></div>
+                    <div class="layer layer-middle"></div>
+                    <div class="layer layer-bottom"></div>
+                    <div class="candles">
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                    </div>
+                </div>
+                <div class="plate"></div>
+            </div>
+            <div class="message-box">
+                <button class="btn" id="blow-out-btn">Blow out the candles!</button>
+                <p id="wish-message" style="margin-top: 1rem;"></p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="birthday-song" src=""></audio>
+
+    <script>
+        const blowOutBtn = document.getElementById('blow-out-btn');
+        const birthdaySong = document.getElementById('birthday-song');
+        const wishMessage = document.getElementById('wish-message');
+        const body = document.querySelector('body');
+
+        // IMPORTANT: Add the path to your birthday song here
+        birthdaySong.src = 'assets/music/happy-birthday-155461.mp3';
+
+        function createPop(x, y) {
+            const colors = ['#ffc107', '#ff5722', '#4caf50', '#2196f3', '#9c27b0'];
+            for (let i = 0; i < 15; i++) { // Create 15 particles
+                const pop = document.createElement('div');
+                pop.className = 'celebration-pop';
+                pop.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const destX = (Math.random() - 0.5) * 300;
+                const destY = (Math.random() - 0.5) * 300;
+                
+                pop.style.setProperty('--pop-x', `${destX}px`);
+                pop.style.setProperty('--pop-y', `${destY}px`);
+                pop.style.left = `${x}px`;
+                pop.style.top = `${y}px`;
+                body.appendChild(pop);
+                setTimeout(() => pop.remove(), 1000);
+            }
+        }
+
+        function createBalloons() {
+            const colors = ['#e91e63', '#00bcd4', '#ffeb3b', '#8bc34a'];
+            let delay = 0;
+            for(let i = 0; i < 4; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.background = colors[i % colors.length];
+                balloon.style.left = `${Math.random() * 100}vw`; // Start from a random horizontal position
+                balloon.style.animationDelay = `${delay}s`;
+                delay += 1; // Stagger the balloons
+                body.appendChild(balloon);
+                setTimeout(() => balloon.remove(), 6000); // Remove balloon after it floats away
+            }
+        }
+
+        blowOutBtn.addEventListener('click', () => {
+            const flames = document.querySelectorAll('.flame');
+            
+            flames.forEach(flame => {
+                const rect = flame.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+
+                flame.classList.add('out');
+
+                const smoke = document.createElement('div');
+                smoke.className = 'smoke';
+                flame.parentElement.appendChild(smoke);
+                smoke.addEventListener('animationend', () => smoke.remove());
+                
+                // Create pops where the candle was
+                setTimeout(() => createPop(x, y), 200);
+            });
+
+            blowOutBtn.disabled = true;
+
+            setTimeout(() => {
+                birthdaySong.play();
+                wishMessage.textContent = '🎉 Wish Granted! Happy Birthday, Shruti! 🎉';
+                createBalloons();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

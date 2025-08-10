@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shruti's Gallery</title>
+  <style>
+    /* Reset and base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(135deg,#1f0066 0%, #7b00ff 50%, #ff5e7e 100%);
+      overflow-x:hidden;
+      color:#fff;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.15);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+    }
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .navbar a:hover {
+      opacity: 1;
+    }
+    .navbar a.active {
+      opacity: 1;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Center stage */
+    .stage{
+      position:relative;
+      width:100%;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 80px 2rem 3rem 2rem;
+    }
+
+    /* Main card */
+    .card{
+      width:min(900px,95%);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius:28px;
+      padding:2.5rem;
+      box-shadow:0 10px 40px rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      position:relative;
+    }
+
+    .headline{
+      font-size:clamp(28px,5vw,58px);
+      letter-spacing:1px;
+      font-weight:700;
+      text-transform:uppercase;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.35), 0 0 30px rgba(255,255,255,0.04) inset;
+      margin-bottom:0.5rem;
+    }
+
+    .sub{
+      font-size:clamp(14px,2vw,18px);
+      opacity:0.85;
+      margin-bottom:1.5rem;
+    }
+    
+    /* --- CINEMATIC SLIDESHOW STYLES --- */
+    .slideshow-container {
+      height: 230vh; /* Taller box to show more of the image */
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2s ease-in-out; /* Slow fade transition */
+      transform: scale(1.15); /* Start slightly zoomed in */
+    }
+
+    .slide.active {
+      opacity: 1;
+      /* Apply the animation to the active slide */
+      animation: ken-burns 8s linear forwards;
+    }
+
+    /* Ken Burns pan and zoom effect */
+    @keyframes ken-burns {
+      0% {
+        transform: scale(1.15) translate(0, 0);
+      }
+      100% {
+        transform: scale(1) translate(2%, -2%); /* Gently pan and zoom out */
+      }
+    }
+    /* --- END STYLES --- */
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="gallery.html" class="active">Gallery</a>
+
+    <a href="games.html">Celebration</a>
+    <a href="surprise.html">Surprise</a>
+  </nav>
+
+  <div class="stage">
+    <div class="card">
+      <h1 class="headline">The Shruti Archives 🗂️</h1>
+      <p class="sub">A trip down memory lane</p>
+
+      <div class="slideshow-container">
+        <div class="slide" style="background-image: url('assets/images/p2.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/p3.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/p4.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/p5.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/p6.jpg');"></div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showNextSlide() {
+      // Deactivate current slide
+      slides[currentSlide].classList.remove('active');
+
+      // Move to the next slide, looping back to the start if necessary
+      currentSlide = (currentSlide + 1) % slides.length;
+
+      // Activate the new current slide
+      slides[currentSlide].classList.add('active');
+    }
+
+    // Start the slideshow
+    // Make the first slide active immediately
+    slides[0].classList.add('active');
+    // Set an interval to show the next slide. The time should be the animation time.
+    setInterval(showNextSlide, 8000); // 8-second animation
+  </script>
+</body>
+</html>
