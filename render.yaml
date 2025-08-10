@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: birthday-for-shruti
+    env: static
+    buildCommand: ""
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: true
